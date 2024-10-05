@@ -1,0 +1,1 @@
+curl -o ~/install_arch_script.sh "https://github.com/ton_utilisateur/ton_depot/raw/main/install_arch_script.sh" && chmod +x ~/install_arch_script.sh && ~/install_arch_script.sh
