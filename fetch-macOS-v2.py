@@ -532,42 +532,24 @@ def main():
     # https://github.com/acidanthera/OpenCorePkg/blob/master/Utilities/macrecovery/boards.json
     # https://github.com/corpnewt/gibMacOS
     products = [
-            {"name": "High Sierra (10.13)", "b": "Mac-7BA5B2D9E42DDD94", "m": "00000000000J80300", "short": "high-sierra"},
-            {"name": "Mojave (10.14)", "b": "Mac-7BA5B2DFE22DDD8C", "m": "00000000000KXPG00", "short": "mojave"},
-            {"name": "Catalina (10.15)", "b": "Mac-00BE6ED71E35EB86", "m": "00000000000000000", "short": "catalina"},
-            {"name": "Big Sur (11.7)", "b": "Mac-2BD1B31983FE1663", "m": "00000000000000000", "short": "big-sur"},
-            {"name": "Monterey (12.6)", "b": "Mac-B809C3757DA9BB8D", "m": "00000000000000000", "os_type": "latest", "short": "monterey"},
-            {"name": "Ventura (13) - RECOMMENDED", "b": "Mac-4B682C642B45593E", "m": "00000000000000000", "os_type": "latest", "short": "ventura"},
-            {"name": "Sonoma (14) ", "b": "Mac-827FAC58A8FDFA22", "m": "00000000000000000", "short": "sonoma"},
-            {"name": "Sequoia (15) ", "b": "Mac-7BA5B2D9E42DDD94", "m": "00000000000000000", "short": "Sequoia", "os_type": "latest"},
-    ]
-    for index, product in enumerate(products):
-        name = product["name"]
-        print('%s. %12s' % (index + 1, name))
-    # test locally using args.shortname = 'mojave'
-    if not args.shortname or args.shortname == '':
-        answer = input('\nChoose a product to download (1-%s): ' % len(products))
-        try:
-            index = int(answer) - 1
-            if index < 0:
-                raise ValueError
-        except (ValueError, IndexError):
-            pass
-    else:
-        index = 0
-        for product in products:
-            if args.shortname == product['short']:
-                break
-            else:
-                index = index+1
-    product = products[index]
-    try:
-        os_type = product["os_type"]
-    except:
-        os_type = "default"
-    args = gdata(mlb = product["m"], board_id = product["b"], diagnostics =
-            False, os_type = os_type, verbose=False, basename="", outdir=".")
-    action_download(args)
+    {"name": "Big Sur (11.7)", "b": "Mac-2BD1B31983FE1663", "m": "00000000000000000", "short": "big-sur"}
+]
+
+# Select Big Sur directly (no need to ask the user)
+product = products[0]
+
+# Extract necessary values for the download
+try:
+    os_type = product["os_type"]
+except KeyError:
+    os_type = "default"
+
+# Set args for Big Sur
+args = gdata(mlb=product["m"], board_id=product["b"], diagnostics=False, os_type=os_type, verbose=False, basename="", outdir=".")
+
+# Trigger the download action
+action_download(args)
+
 
 
 if __name__ == '__main__':
